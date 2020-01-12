@@ -27,6 +27,11 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 
+RC_ICONS = subtitles_converter.ico
+
+VERSION = 0.1.0
+DEFINES += APP_VERSION=\\\"$$VERSION\\\"
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
