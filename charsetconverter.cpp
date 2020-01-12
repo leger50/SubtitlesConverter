@@ -4,8 +4,11 @@
 #include <QTextStream>
 #include <QFile>
 
-CharsetConverter::CharsetConverter()
-{
+CharsetConverter::CharsetConverter(){
+
+}
+
+CharsetConverter::~CharsetConverter(){
 
 }
 
@@ -40,4 +43,8 @@ bool CharsetConverter::loadDataFile(QString pathToFilename){
     }
 
     return false;
+}
+
+bool CharsetConverter::isConfigure(){
+    return !m_dataFile.isNull();
 }

@@ -9,10 +9,13 @@ class CharsetConverter
 
 public:
     CharsetConverter();
+    ~CharsetConverter();
 
     void configure(QString pathToFile);
     void launchConversionToUtf8();
     void saveConversion();
+
+    bool isConfigure();
 
 private:
     bool loadDataFile(QString pathToFilename);

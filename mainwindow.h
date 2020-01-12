@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QStandardPaths>
+
+#include "charsetconverter.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,10 +20,17 @@ public:
 
 private slots:
     void on_btn_importFile_clicked();
+    void on_btn_startConvert_clicked();
 
 private:
     Ui::MainWindow *ui;
+    CharsetConverter m_converter;
 
-    void startConverter(QString pathToFilename);
+    void importFile();
+    void startConverter();
+
+    QString chooseFileFromUserSpace(QStandardPaths::StandardLocation userDirectory);
+
+    void displayFilenameInput(QString filename);
 };
 #endif // MAINWINDOW_H

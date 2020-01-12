@@ -6,26 +6,92 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>309</width>
+    <height>227</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="btn_importFile">
+   <widget class="QPushButton" name="btn_startConvert">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>170</y>
+      <x>210</x>
+      <y>140</y>
       <width>80</width>
       <height>22</height>
      </rect>
     </property>
     <property name="text">
-     <string>Import file</string>
+     <string>Start</string>
     </property>
+   </widget>
+   <widget class="QProgressBar" name="bar_statusConversion">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>140</y>
+      <width>171</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>19</y>
+      <width>271</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="layout_configuration">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_titleFileImport">
+       <property name="text">
+        <string>File :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" colspan="2">
+      <widget class="QLabel" name="label_valueFileImport">
+       <property name="text">
+        <string>No selected file</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="btn_importFile">
+       <property name="text">
+        <string>Import file</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_titleCharset">
+       <property name="text">
+        <string>Charset :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" colspan="3">
+      <widget class="QComboBox" name="box_valueCharset"/>
+     </item>
+     <item row="2" column="0" colspan="2">
+      <widget class="QLabel" name="label_titleGeneratedFile">
+       <property name="text">
+        <string>File output :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2" colspan="2">
+      <widget class="QLineEdit" name="edit_nameFileOutput"/>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -33,7 +99,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>309</width>
      <height>21</height>
     </rect>
    </property>

@@ -1,9 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "charsetconverter.h"
-
-#include <QStandardPaths>
 #include <QFileDialog>
 #include <QDebug>
 
@@ -19,18 +16,34 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::on_btn_importFile_clicked(){
-    const QString documentFolder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open subtitle file"), documentFolder, tr("Subtitles Files (*.srt *.sub *.sbv)"));
-
-    startConverter(fileName);
+    importFile();
 }
 
-void MainWindow::startConverter(QString pathToFilename){
-    CharsetConverter converter;
+void MainWindow::on_btn_startConvert_clicked(){
+    startConverter();
+}
 
-    converter.configure(pathToFilename);
-    converter.launchConversionToUtf8();
-    converter.saveConversion();
+void MainWindow::importFile(){
+    QString pathToFilename = chooseFileFromUserSpace(QStandardPaths::DocumentsLocation);
+
+    if(!pathToFilename.isNull() && !pathToFilename.isEmpty()){
+        m_converter.configure(pathToFilename);
+        displayFilenameInput(QFileInfo(pathToFilename).fileName());
+    }
+}
+
+void MainWindow::startConverter(){
+    if(m_converter.isConfigure()){
+        m_converter.launchConversionToUtf8();
+        m_converter.saveConversion();
+    }
+}
+
+QString MainWindow::chooseFileFromUserSpace(QStandardPaths::StandardLocation userDirectory){
+    return QFileDialog::getOpenFileName(this, tr("Open subtitle file"), QStandardPaths::writableLocation(userDirectory), tr("Subtitles Files (*.srt *.sub *.sbv)"));
+}
+
+void MainWindow::displayFilenameInput(QString filename){
+    ui->label_valueFileImport->setText(filename);
 }
