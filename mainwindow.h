@@ -22,9 +22,11 @@ private slots:
     void on_btn_importFile_clicked();
     void on_btn_startConvert_clicked();
 
+    void displayError(QString error);
+
 private:
     Ui::MainWindow *ui;
-    CharsetConverter m_converter;
+    CharsetConverter *m_converter;
 
     void importFile();
     void startConverter();
@@ -32,5 +34,7 @@ private:
     QString chooseFileFromUserSpace(QStandardPaths::StandardLocation userDirectory);
 
     void displayFilenameInput(QString filename);
+
+    const static QString DEFAULT_TEXT_FILE_INPUT;
 };
 #endif // MAINWINDOW_H
