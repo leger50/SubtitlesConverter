@@ -29,7 +29,7 @@ void CharsetConverter::launchConversionToUtf8(){
         delete decoder;
 
     }else{
-        emit throw_error(ERROR_CONFIGURATION);
+        emit sThrowError(ERROR_CONFIGURATION);
     }
 }
 
@@ -37,7 +37,7 @@ void CharsetConverter::saveConversion(){
     QFile file(m_pathToNewFilename);
 
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)){
-        emit throw_error(ERROR_SAVE);
+        emit sThrowError(ERROR_SAVE);
         return;
     }
 

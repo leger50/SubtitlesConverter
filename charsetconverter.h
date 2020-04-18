@@ -18,12 +18,13 @@ public:
     void saveConversion();
 
 signals:
-    void throw_error(QString message);
+    void sThrowError(QString message);
 
 private:
     bool loadDataFile(QString pathToFilename);
     bool isConfigure();
 
+private:
     QByteArray m_dataFile;
     QString m_pathToNewFilename;
 

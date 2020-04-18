@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     m_converter = new CharsetConverter();
 
-    connect(m_converter, SIGNAL(throw_error(QString)), this, SLOT(displayError(QString)));
+    connect(m_converter, SIGNAL(sThrowError(QString)), this, SLOT(displayError(QString)));
 }
 
 MainWindow::~MainWindow()
