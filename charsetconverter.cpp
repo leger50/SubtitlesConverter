@@ -4,6 +4,9 @@
 #include <QTextStream>
 #include <QFile>
 
+const QString CharsetConverter::MESSAGE_SAVE = tr("File save to : %1");
+const QString CharsetConverter::MESSAGE_CONVERSION = tr("Conversion from %1 to UTF-8 succeeded");
+
 const QString CharsetConverter::ERROR_CONFIGURATION = tr("Charset converter is not properly configured");
 const QString CharsetConverter::ERROR_SAVE = tr("Could not save results");
 
@@ -21,11 +24,16 @@ void CharsetConverter::configure(QString pathToFile){
 }
 
 void CharsetConverter::launchConversionToUtf8(){
+    emit sProgressConversion(0);
+
     if(isConfigure()){
         QTextDecoder *decoder = QTextCodec::codecForName("Windows-1252")->makeDecoder();
         QString result = decoder->toUnicode(m_dataFile,m_dataFile.length());
 
         m_dataFile = result.toUtf8();
+
+        emit sProgressConversion(100);
+        emit sMessage(MESSAGE_CONVERSION.arg("Windows-1252"));
         delete decoder;
 
     }else{
@@ -44,6 +52,8 @@ void CharsetConverter::saveConversion(){
     QTextStream stream(&file); stream.setCodec("UTF-8");
     stream << m_dataFile;
     file.close();
+
+    emit sMessage(MESSAGE_SAVE.arg(file.fileName()));
 }
 
 bool CharsetConverter::loadDataFile(QString pathToFilename){

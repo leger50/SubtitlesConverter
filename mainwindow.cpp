@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     m_converter = new CharsetConverter();
 
+    connect(m_converter, SIGNAL(sMessage(QString)), this, SLOT(displayMessage(QString)));
+    connect(m_converter, SIGNAL(sProgressConversion(quint8)), this, SLOT(displayConversionProgress(quint8)));
     connect(m_converter, SIGNAL(sThrowError(QString)), this, SLOT(displayError(QString)));
 }
 
@@ -49,6 +51,15 @@ void MainWindow::startConverter(){
 
 QString MainWindow::chooseFileFromUserSpace(QStandardPaths::StandardLocation userDirectory){
     return QFileDialog::getOpenFileName(this, tr("Open subtitle file"), QStandardPaths::writableLocation(userDirectory), tr("Subtitles Files (*.srt *.sub *.sbv)"));
+}
+
+void MainWindow::displayMessage(QString message){
+    ui->text_messageConversion->appendPlainText(message);
+    ui->text_messageConversion->ensureCursorVisible();
+}
+
+void MainWindow::displayConversionProgress(quint8 percentage){
+    ui->bar_statusConversion->setValue(percentage);
 }
 
 void MainWindow::displayError(QString error){
