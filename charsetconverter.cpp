@@ -18,9 +18,9 @@ CharsetConverter::~CharsetConverter(){
 
 }
 
-void CharsetConverter::configure(QString pathToFile){
-   loadDataFile(pathToFile);
-   m_pathToNewFilename = pathToFile.append(".new");
+void CharsetConverter::configure(QString pathToFileInput, QString pathToFileOutput){
+   loadDataFile(pathToFileInput);
+   m_pathToFileOutput = pathToFileOutput;
 }
 
 void CharsetConverter::launchConversionToUtf8(){
@@ -28,7 +28,7 @@ void CharsetConverter::launchConversionToUtf8(){
 
     if(isConfigure()){
         QTextDecoder *decoder = QTextCodec::codecForName("Windows-1252")->makeDecoder();
-        QString result = decoder->toUnicode(m_dataFile,m_dataFile.length());
+        QString result = decoder->toUnicode(m_dataFile, m_dataFile.length());
 
         m_dataFile = result.toUtf8();
 
@@ -42,7 +42,7 @@ void CharsetConverter::launchConversionToUtf8(){
 }
 
 void CharsetConverter::saveConversion(){
-    QFile file(m_pathToNewFilename);
+    QFile file(m_pathToFileOutput);
 
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)){
         emit sThrowError(ERROR_SAVE);

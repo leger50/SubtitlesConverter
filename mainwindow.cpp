@@ -36,21 +36,43 @@ void MainWindow::on_btn_startConvert_clicked(){
 void MainWindow::importFile(){
     QString pathToFilename = chooseFileFromUserSpace(QStandardPaths::DocumentsLocation);
 
-    if(!pathToFilename.isNull() && !pathToFilename.isEmpty()){
-        m_converter->configure(pathToFilename);
-        displayFilenameInput(QFileInfo(pathToFilename).fileName());
+    if(filePathIsValid(pathToFilename)){
+        QFileInfo fileInfo(pathToFilename);
+        m_pathToDirectory = fileInfo.path().append("/");
+        m_filenameInput = fileInfo.fileName();
+        m_filenameOutput = fileInfo.baseName() + "_new." + fileInfo.suffix();
+
+        displayFilenameInput(m_filenameInput);
+        displayFilenameOuput(m_filenameOutput);
     }else{
         displayFilenameInput(DEFAULT_TEXT_FILE_INPUT);
     }
 }
 
 void MainWindow::startConverter(){
+    m_filenameOutput = getFilenameOuput();
+
+    QString pathToInputFile = m_pathToDirectory + m_filenameInput;
+    QString pathToOutputFile = m_pathToDirectory + m_filenameOutput;
+
+    if(filePathIsValid(pathToInputFile) && filePathIsValid(pathToOutputFile)){
+        m_converter->configure(pathToInputFile, pathToOutputFile);
+    }
+
     m_converter->launchConversionToUtf8();
     m_converter->saveConversion();
 }
 
 QString MainWindow::chooseFileFromUserSpace(QStandardPaths::StandardLocation userDirectory){
     return QFileDialog::getOpenFileName(this, tr("Open subtitle file"), QStandardPaths::writableLocation(userDirectory), tr("Subtitles Files (*.srt *.sub *.sbv)"));
+}
+
+QString MainWindow::getFilenameOuput(){
+    return ui->edit_nameFileOutput->text();
+}
+
+bool MainWindow::filePathIsValid(QString pathToFile){
+    return !pathToFile.isNull() && !pathToFile.isEmpty();
 }
 
 void MainWindow::displayMessage(QString message){
@@ -68,4 +90,8 @@ void MainWindow::displayError(QString error){
 
 void MainWindow::displayFilenameInput(QString filename){
     ui->label_valueFileImport->setText(filename);
+}
+
+void MainWindow::displayFilenameOuput(QString filename){
+    ui->edit_nameFileOutput->setText(filename);
 }
