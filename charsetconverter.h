@@ -13,11 +13,13 @@ public:
     CharsetConverter();
     ~CharsetConverter();
 
-    void configure(QString pathToFile);
+    void configure(QString pathToFileInput, QString pathToFileOutput);
     void launchConversionToUtf8();
     void saveConversion();
 
 signals:
+    void sMessage(QString message);
+    void sProgressConversion(quint8 percentage);
     void sThrowError(QString message);
 
 private:
@@ -26,7 +28,10 @@ private:
 
 private:
     QByteArray m_dataFile;
-    QString m_pathToNewFilename;
+    QString m_pathToFileOutput;
+
+    const static QString MESSAGE_CONVERSION;
+    const static QString MESSAGE_SAVE;
 
     const static QString ERROR_CONFIGURATION;
     const static QString ERROR_SAVE;
